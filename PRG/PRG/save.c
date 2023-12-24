@@ -303,7 +303,8 @@ int Load(int* num_loc, Character* hero) {
     FILE* file;
     fopen_s(&file, "save.sav", "rb"); // Открытие файла для чтения в бинарном режиме
     if (file == NULL) {
-        perror("Ошибка открытия файла");
+        attron(COLOR_PAIR(1) | A_UNDERLINE);
+        mvprintw(rows / 2, (cols - 25) / 2, "У вас нет сохраненной игры");
         return 1;
     }
     fseek(file, 0, SEEK_END); // Переход в конец файла
@@ -323,8 +324,7 @@ int Load(int* num_loc, Character* hero) {
         return 0;
     } else {
         attron(COLOR_PAIR(1) | A_UNDERLINE);
-        mvprintw(rows / 2, cols / 2, "Нарушение целостности сохранения");
-        getch();
+        mvprintw(rows / 2, (cols - 31) / 2, "Нарушение целостности сохранения");
         free(buffer);
         return 1;
     }
